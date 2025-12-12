@@ -330,12 +330,13 @@ export function BookingFlow({ business, initialData, onComplete, onBack }: Booki
                   Back
                 </Button>
                 <Button
-                  onClick={handleConfirm}
-                  className="flex-1 bg-[var(--color-highlight)] hover:bg-[#00A874] text-white"
-                >
-                  <CheckCircle className="w-5 h-5 mr-2" />
-                  Confirm Booking
-                </Button>
+  onClick={handleConfirm}
+  style={{ backgroundColor: '#00A874', color: 'white' }} // Forces the color
+  className="flex-1 hover:opacity-90 transition-opacity" // Adds hover effect
+>
+  <CheckCircle className="w-5 h-5 mr-2" />
+  Confirm Booking
+</Button>
               </div>
             </div>
           )}

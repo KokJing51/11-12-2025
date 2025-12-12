@@ -323,13 +323,14 @@ export function BusinessProfile({
           </div>
 
           {/* Right: Booking Widget */}
-          <div className="lg:w-96">
-            <BookingWidget
-              services={services}
-              onContinue={onStartBooking}
-              isSticky
-            />
-          </div>
+      <div className="lg:w-96">
+        <BookingWidget
+          services={services}
+          business={business}
+          onContinue={onStartBooking}
+          isSticky
+        />
+      </div>
         </div>
       </div>
     </div>

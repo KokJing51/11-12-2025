@@ -9,6 +9,15 @@ import { SearchResults } from './components/pages/SearchResults';
 import { BusinessProfile } from './components/pages/BusinessProfile';
 import { BookingFlow } from './components/booking/BookingFlow';
 import { ConfirmationPage } from './components/booking/ConfirmationPage';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "./components/ui/alert-dialog";
 
 // Helper: Fix image URLs from backend
 const getImageUrl = (path: string) => {
@@ -41,6 +50,7 @@ const PREDEFINED_CATEGORIES = ['Salon', 'Restaurant', 'Fitness'];
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false); // <--- Added for Popup
   
   // Real Data State
   const [businesses, setBusinesses] = useState<any[]>([]);
@@ -233,8 +243,7 @@ export default function App() {
         });
 
         if (response.ok) {
-          toast.success("Booking Confirmed! Check your WhatsApp.");
-          handleNavigate('confirmation');
+          setShowSuccessDialog(true); // <--- Trigger the popup instead of navigation
         } else {
           toast.error("Booking failed. Please try again.");
         }
@@ -298,6 +307,30 @@ export default function App() {
             onWhatsAppClick={() => {}}
          />
       )}
+
+      {/* Booking Success Popup */}
+      <AlertDialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Booking Confirmed!</AlertDialogTitle>
+            <AlertDialogDescription>
+              Your appointment has been successfully booked. We have sent the details to your WhatsApp.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction 
+              onClick={() => {
+                setShowSuccessDialog(false);
+                handleNavigate('home'); // Redirect to Home
+              }}
+              style={{ backgroundColor: '#00A874', color: 'white' }}
+              className="hover:opacity-90"
+            >
+              Okay
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <Toaster />
       <ScrollToTop />
